@@ -12,14 +12,16 @@ the script has an _()-function for gettext feeling in javascript.
 In the "public_html" folder everything ist put together. There you'll find the
 following structure:
 * js
-** jq.gettext.js
-** jq.gettext-parser.js
-** jquery-3.1.1.min
+  * jq.gettext.js
+  * jq.gettext-parser.js
+  * jquery-3.1.1.min
 * lang
-** standard.pot
-** template.json
-** ...
+  * standard.pot
+  * template.json
+  * ...
 * index.html
+
+## Collect the translatable strings
 
 The **index.html** hold a tiny HTML5 program, that can load a template file, some
 HTML and JS files and then parse them for translatable strings. To save the generated
@@ -28,12 +30,30 @@ do the correct naming and pathing by yourself.
 
 The **jq.gettext-parser.js** holds the functions for the HTML5 program.
 
+## Put the translated strings into the HTML document
+
 The **jq.gettext.js** does the magic. Just put a standard gettext structure in your 
 static HTML project, fill in the meta in the head of the HTML document:
-* <meta name="gettext-type" content="po" />
-* <meta name="gettext-type" content="po" />
-* <meta name="gettext-type" content="po" />
-* <meta name="gettext-type" content="po" />
+* <meta name="gettext-path" content="lang" />
+  * The path to the gettext style folder structure.
+* <meta name="gettext-lang" content="de_DE" />
+  * The language folder.
+* <meta name="gettext-domain" content="standard" />
+  * The domain name (in fact the file name).
+* <meta name="gettext-type" content="json" />
+  * The type of lang file (in fact the file ending)
+and the rest will be done automatically.
+
+But maybe we have a HTML5 app with dynamic changes. So there are some JS functions 
+in *jq.gettext.js* that may be useful.
+
+# POT or JSON?
+
+The suppport for JSON is much more better (as it is JS built in), but it's harder to 
+maintain different languages, as there is no autmatic possibilty implemented to merge
+old language files with new JSON templates.
+With a POT file you can use [Poedit](https://poedit.net/) to do the translations and to 
+merge new POT files in old PO language files.
 
 # Bugs
 * the PO conversion is very weak (doesn't support multiple lines and so on)
