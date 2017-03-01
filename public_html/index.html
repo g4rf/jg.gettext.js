@@ -14,15 +14,20 @@
 	<title>jqGettext Parser</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<meta name="gettext-type" content="po" />
 </head><body>
 	<h1>jqGettext Parser</h1>
 	
-	<p>JSON template: <input type="file" id="template" /></p>
-		
+	<p><button id="reset">Reset</button></p>
+	
+	<p>template: <input type="file" id="template" /></p>
+	
 	<p>files to parse: <input type="file" id="file" multiple /></p>
 	
 	<button id="parse">parse</button>
-	<button id="write">write</button>
+	<button id="write-json">write JSON</button>
+	<button id="write-pot">write POT</button>
 	
 	<p id="info"></p>
 	

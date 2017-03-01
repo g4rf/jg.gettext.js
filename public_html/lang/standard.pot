@@ -1,0 +1,49 @@
+# This file is badly generated with a simple JSON to PO function
+# used by jq.gettext.js.
+# https://github.com/g4rf/jg.gettext.js.git
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8"
+
+msgid "jqGettext Parser"
+msgstr ""
+
+msgid "JSON template: "
+msgstr ""
+
+msgid "files to parse: "
+msgstr ""
+
+msgid "parse"
+msgstr ""
+
+msgid "write JSON"
+msgstr ""
+
+msgid "write POT"
+msgstr ""
+
+msgid "download JSON template"
+msgstr ""
+
+msgid "download POT template"
+msgstr ""
+
+msgid "No file selected."
+msgstr ""
+
+msgid "parsing file "
+msgstr ""
+
+msgid "Reset"
+msgstr ""
+
+msgid "template: "
+msgstr ""
+
+msgid "Template file format not recognized!"
+msgstr ""
+
+msgid "Process canceled."
+msgstr ""
+

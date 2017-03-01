@@ -1,3 +1,5 @@
+/* global jqGettext */
+
 /**
  * jqGettext is able to translate static HTML pages with the help of jQuery as
  * GNU gettext does it with dynamic pages.
@@ -13,7 +15,7 @@
  * @updated 2017-03-01
  * 
  * TODO:
- *  - add pot/mo/po support
+ *  - improve POT support
  */
 
 var jqGettextParser = {
@@ -38,20 +40,12 @@ var jqGettextParser = {
             if(typeof jqGettextParser.template[string] === "undefined")
                 jqGettextParser.template[string] = "";
         });
-    },
-    
-    writeTemplate: function() {
-        var uriContent = "data:application/json," + encodeURIComponent(
-                JSON.stringify(jqGettextParser.template, null, 4));
-        window.open(uriContent, _('download JSON template'));
     }
 };
 
-$("#write").click(function() {    
-    jqGettextParser.writeTemplate();
-});
-
-$("#parse").click(function() {    
+$("#parse").click(function() {
+    jqGettextParser.info("----------------------");
+    
     if(! $("#file")[0].files.length) {
         jqGettextParser.info(_("No file selected."));
         return;
@@ -77,7 +71,23 @@ $("#parse").click(function() {
     };
     
     templateReader.onload = function (e) {
-        jqGettextParser.template = jQuery.parseJSON(e.target.result);
+        var t = {};
+        switch(template.name.substr(-4)) {
+            case "json":        
+                t = jQuery.parseJSON(e.target.result);
+                break;
+            case ".pot":
+                t = jqGettext.parsePOtoJSON(e.target.result);
+                break;
+            default:
+                jqGettextParser.info(_("Template file format not recognized!"));
+                jqGettextParser.info(_("Process canceled."));
+                return;
+        }
+        jQuery.each(t, function(key, value) {
+            jqGettextParser.template[key] = value;
+        });        
+        
         fileReader.readAsText(fileList[actualFile]);
     };
     
@@ -86,4 +96,20 @@ $("#parse").click(function() {
     } else {
         fileReader.readAsText(fileList[actualFile]);
     }
+});
+
+$("#write-json").click(function() {    
+    var uriContent = "data:application/json," + encodeURIComponent(
+        JSON.stringify(jqGettextParser.template, null, 4));
+    window.open(uriContent, _('download JSON template'));
+});
+
+$("#write-pot").click(function() {    
+    var uriContent = "data:application/pot," + encodeURIComponent(
+        jqGettext.parseJSONtoPO(jqGettextParser.template));
+    window.open(uriContent, _('download POT template'));
+});
+
+$("#reset").click(function() {    
+    location.reload(true);
 });
