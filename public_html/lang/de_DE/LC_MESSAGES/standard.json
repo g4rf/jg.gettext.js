@@ -1,0 +1,11 @@
+{
+    "download JSON template": "JSON-Vorlage herunterladen",
+    "No file selected.": "Keine Datei ausgewählt.",
+    "parsing file ": "Parse Datei... ",
+    "jqGettext Parser": "jqGettext Parser",
+    "JSON Template: ": "JSON Vorlage: ",
+    "files to parse: ": "Zu parsende Dateien: ",
+    "parse": "Parsen",
+    "write": "Schreiben",
+    "JSON template: ": "JSON Vorlage: "
+}
