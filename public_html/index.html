@@ -2,7 +2,7 @@
  * jqGettext is able to translate static HTML pages with the help of jQuery as
  * GNU gettext does it with dynamic pages.
  * 
- * This file gives the gui for jqgettext-parser.js.
+ * This file is the gui for jqgettext-parser.js.
  * 
  * @license GNU GPL v3 https://www.gnu.org/licenses/gpl-3.0
  * @version 0.1alpha
@@ -16,10 +16,14 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head><body>
 	<h1>jqGettext Parser</h1>
-	<h2>HTML Parser</h2>
 	
-	<br />
-	<h2>JS Parser</h2>
+	<p>JSON Template: <input type="file" id="template" /></p>
+		
+	<p>file to parse: <input type="file" id="file" /></p>
+	
+	<button id="parse">parse</button>
+	
+	<p id="info"></p>
 	
 	<!-- scripts -->
 	<script src="js/jquery-3.1.1.min.js"></script>

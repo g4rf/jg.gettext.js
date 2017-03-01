@@ -16,4 +16,63 @@
  *  - add pot/mo/po support
  */
 
+var jqParser = {
+    template: {},
+    
+    info: function(msg) {
+        $("#info").append(msg);
+    },
+    
+    parseHTML: function(data) {
+        var nodes = $(data).find(":not(iframe)").addBack().contents().filter(function() {
+            return this.nodeType === 3 && jQuery.trim(this.nodeValue);
+        });
+        jQuery.each(nodes, function(index, node) {
+            if(typeof jqParser.template[node.nodeValue] === "undefined")
+                jqParser.template[node.nodeValue] = "";
+        });
+        jqParser.writeTemplate();
+    },
+    
+    parseJS: function(data) {
+        
+    },
+    
+    writeTemplate: function() {
+        var uriContent = "data:application/json," + encodeURIComponent(
+                JSON.stringify(jqParser.template, null, 4));
+        window.open(uriContent, 'download JSON template');
+    }
+};
 
+$("#parse").click(function() {
+    var template = $("#template")[0].files[0] || null;
+    var file =  $("#file")[0].files[0] || null;
+    
+    var templateReader = new FileReader();
+    var fileReader = new FileReader();
+    
+    $("#info").empty();
+    
+    if(! file) {
+        jqParser.info("No file selected.");
+        return;
+    }
+
+    fileReader.onload = function (e) {
+        // console.log(e.target.result);
+        jqParser.parseHTML(jQuery.parseHTML(e.target.result));
+        jqParser.parseJS(e.target.result);
+    };
+    templateReader.onload = function (e) {
+        // console.log(e.target.result);
+        jqParser.template = jQuery.parseJSON(e.target.result);
+        fileReader.readAsText(file);
+    };
+    
+    if(template) {
+        templateReader.readAsText(template);
+    } else {
+        fileReader.readAsText(file);
+    }
+});
