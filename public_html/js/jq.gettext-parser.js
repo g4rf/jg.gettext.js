@@ -18,13 +18,30 @@
  *  - improve POT support
  */
 
+/**
+ * Holds function for the parser.
+ * @namespace
+ */
 var jqGettextParser = {
+    /**
+     * Holds the collected translatable strings.
+     * @type Object
+     */
     template: {},
     
+    /**
+     * Prints a status message.
+     * @param {String} msg The message.
+     */
     info: function(msg) {
         $("#info").prepend(msg + "<br />");
     },
     
+    /**
+     * Parses a HTML document for text nodes and put the translatable strings
+     *  into jqGettextParser.template.
+     * @param {jQuery} data A jQuery readable object.
+     */
     parseHTML: function(data) {
         var nodes = $(data).find(":not(iframe)").addBack().contents().filter(function() {
             return this.nodeType === 3 && jQuery.trim(this.nodeValue);
@@ -35,6 +52,12 @@ var jqGettextParser = {
         });
     },
     
+    /**
+     * Parses a plain text file for the gettext function _() and put the 
+     *  inner strings into jqGettextParser.template.
+     * @param {type} data
+     * @returns {undefined}
+     */
     parseJS: function(data) {
         data.replace(/_\(["|'](.+?)["|']\)/g, function(m, string) {
             if(typeof jqGettextParser.template[string] === "undefined")
@@ -43,6 +66,9 @@ var jqGettextParser = {
     }
 };
 
+/**
+ * Start parsing the files.
+ */
 $("#parse").click(function() {
     jqGettextParser.info("----------------------");
     
@@ -98,18 +124,28 @@ $("#parse").click(function() {
     }
 });
 
+/**
+ * Output the jqGettextParser.template as JSON.
+ */
 $("#write-json").click(function() {    
     var uriContent = "data:application/json," + encodeURIComponent(
         JSON.stringify(jqGettextParser.template, null, 4));
     window.open(uriContent, _('download JSON template'));
 });
 
+/**
+ * Output the jqGettextParser.template as a POT file.
+ */
 $("#write-pot").click(function() {    
     var uriContent = "data:application/pot," + encodeURIComponent(
         jqGettext.parseJSONtoPO(jqGettextParser.template));
     window.open(uriContent, _('download POT template'));
 });
 
+/**
+ * Resets all input fields and clears the jqGettextParser.template. In fact it
+ * hard reloads the page.
+ */
 $("#reset").click(function() {    
     location.reload(true);
 });
