@@ -7,6 +7,8 @@ and put them in a gettext-style folder structure. Now reference it in the HTML
 document and load the jqgettext.js. Now every text node is translated. In addition
 the script has an _()-function for gettext feeling in javascript.
 
+Feel free to contact me at admin@g4rf.net.
+
 # What's in there
 
 In the "public_html" folder everything ist put together. There you'll find the
