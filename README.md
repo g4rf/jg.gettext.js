@@ -1,4 +1,4 @@
-# jg.gettext.js
+# jq.gettext.js
 A simple HTML and JS translation for static websites using jQuery.
 
 The general idea is, to use jQuery to read the text nodes from an HTML document
