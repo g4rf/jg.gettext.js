@@ -16,23 +16,81 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	
 	<meta name="gettext-type" content="po" />
-</head><body>
+	
+	<style>
+		html { box-sizing: border-box; } 
+		*, ::before, ::after { box-sizing: inherit; }
+		
+		#left, #right {
+			position: fixed;
+			overflow: auto;
+			top: 0;
+			bottom: 0;
+			width: 48%;
+			margin: 1%;
+			padding: 1%;
+		}
+		#left {
+			left: 0;
+			overflow-x: hidden;
+		}
+		#right {
+			right: 0;
+			border: solid 1px #ccc;
+			padding: 1%;
+		}
+		fieldset {
+			margin: 1% 0;
+		}
+	</style>
+</head><body><div id="left">
 	<h1>jqGettext Parser</h1>
 	
-	<p><button id="reset">Reset</button></p>
+	<div class="buttonpane">
+		<button id="parse">parse</button>
+		&nbsp;|&nbsp;
+		<button id="write-json">write JSON</button> 
+		<button id="write-pot">write POT</button>
+		&nbsp;|&nbsp;
+		<button id="reset">reset</button>
+	</div>
 	
-	<p>template: <input type="file" id="template" /></p>
+	<fieldset>
+		<legend>template</legend>
+		<input type="file" id="template" />
+	</fieldset>
 	
-	<p>files to parse: <input type="file" id="file" multiple /></p>
+	<fieldset>
+		<legend>files to parse</legend>
+		<input type="file" id="file" multiple />
+		<p id="files"></p>
+	</fieldset>
 	
-	<button id="parse">parse</button>
-	<button id="write-json">write JSON</button>
-	<button id="write-pot">write POT</button>
+	<ol>
+		<li>Select a template file, if you have any.</li>
+		<li>Select files for parsing.</li>
+		<li>Click "parse".</li>
+		<li>Repeat last two step with all files from your project.</li>
+		<li>Export the new template with "output JSON" or "output POT".</li>
+		<li>Download or save the file with your browser.</li>
+	</ol>
+	<p>Now you're ready to edit the template (e.g. with 
+	<a href="https://poedit.net">Poedit</a>) and use it in your project.</p>
 	
-	<p id="info"></p>
+	<fieldset>
+		<legend>info</legend>
+		<p id="info"></p>
+	</fieldset>	
 	
+</div><div id="right">
+
+	<pre id="template-output"></pre>
+	
+</div>
+
 	<!-- scripts -->
 	<script src="js/jquery-3.1.1.min.js"></script>
 	<script src="js/jq.gettext.js"></script>
 	<script src="js/jq.gettext-parser.js"></script>
+
 </body></html>

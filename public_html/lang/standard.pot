@@ -8,10 +8,10 @@ msgstr ""
 msgid "jqGettext Parser"
 msgstr ""
 
-msgid "JSON template: "
+msgid "\n\t\thtml { box-sizing: border-box; } \n\t\t*, ::before, ::after { box-sizing: inherit; }\n\t\t\n\t\t#left, #right {\n\t\t\tposition: fixed;\n\t\t\toverflow: auto;\n\t\t\ttop: 0;\n\t\t\tbottom: 0;\n\t\t\twidth: 48%;\n\t\t\tmargin: 1%;\n\t\t\tpadding: 1%;\n\t\t}\n\t\t#left {\n\t\t\tleft: 0;\n\t\t\toverflow-x: hidden;\n\t\t}\n\t\t#right {\n\t\t\tright: 0;\n\t\t\tborder: solid 1px #ccc;\n\t\t\tpadding: 1%;\n\t\t}\n\t\tfieldset {\n\t\t\tmargin: 1% 0;\n\t\t}\n\t"
 msgstr ""
 
-msgid "files to parse: "
+msgid "\n\t\t | \n\t\t"
 msgstr ""
 
 msgid "parse"
@@ -23,10 +23,58 @@ msgstr ""
 msgid "write POT"
 msgstr ""
 
-msgid "download JSON template"
+msgid "reset"
 msgstr ""
 
-msgid "download POT template"
+msgid "template"
+msgstr ""
+
+msgid "files to parse"
+msgstr ""
+
+msgid "Select a template file, if you have any."
+msgstr ""
+
+msgid "Select files for parsing."
+msgstr ""
+
+msgid "Click \"parse\"."
+msgstr ""
+
+msgid "Repeat last two step with all files from your project."
+msgstr ""
+
+msgid "Export the new template with \"output JSON\" or \"output POT\"."
+msgstr ""
+
+msgid "Download or save the file with your browser."
+msgstr ""
+
+msgid "Now you're ready to edit the template (e.g. with \n\t"
+msgstr ""
+
+msgid ") and use it in your project."
+msgstr ""
+
+msgid "Poedit"
+msgstr ""
+
+msgid "info"
+msgstr ""
+
+msgid "Can't read template file."
+msgstr ""
+
+msgid "Template file \nformat not recognized!"
+msgstr ""
+
+msgid "Process canceled."
+msgstr ""
+
+msgid "Template loaded."
+msgstr ""
+
+msgid "Files selected."
 msgstr ""
 
 msgid "No file selected."
@@ -35,15 +83,9 @@ msgstr ""
 msgid "parsing file "
 msgstr ""
 
-msgid "Reset"
+msgid "download JSON template"
 msgstr ""
 
-msgid "template: "
-msgstr ""
-
-msgid "Template file format not recognized!"
-msgstr ""
-
-msgid "Process canceled."
+msgid "download POT template"
 msgstr ""
 

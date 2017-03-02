@@ -50,6 +50,7 @@ var jqGettextParser = {
             if(typeof jqGettextParser.template[node.nodeValue] === "undefined")
                 jqGettextParser.template[node.nodeValue] = "";
         });
+        jqGettextParser.printTemplate();
     },
     
     /**
@@ -63,25 +64,75 @@ var jqGettextParser = {
             if(typeof jqGettextParser.template[string] === "undefined")
                 jqGettextParser.template[string] = "";
         });
+        jqGettextParser.printTemplate();
+    },
+    
+    printTemplate: function() {
+        $("#template-output").empty().append(
+                JSON.stringify(jqGettextParser.template, null, 4));
     }
 };
 
 /**
+ * Reads the template file.
+ */
+$("#template").change(function() {    
+    var template = $("#template")[0].files[0] || null;
+    if(! template) {
+        jqGettextParser.info(_("Can't read template file."));
+    }
+    
+    var reader = new FileReader();    
+    reader.onload = function (e) {
+        var t = {};
+        switch(template.name.substr(-4)) {
+            case "json":        
+                t = jQuery.parseJSON(e.target.result);
+                break;
+            case ".pot":
+                t = jqGettext.parsePOtoJSON(e.target.result);
+                break;
+            default:
+                jqGettextParser.info(_("Template file \nformat not recognized!"));
+                jqGettextParser.info(_("Process canceled."));
+                return;
+        }
+        jQuery.each(t, function(key, value) {
+            jqGettextParser.template[key] = value;
+        });
+        
+        jqGettextParser.printTemplate();
+        
+        jqGettextParser.info(_("Template loaded."));
+    };    
+    reader.readAsText(template);
+});
+
+/**
+ * Print some informations about the selected files.
+ */
+$("#file").change(function() {
+    $("#files").empty();
+    jQuery.each($("#file")[0].files, function(index, file) {
+        $("#files").append(file.name + " (" + 
+                (file.size / 1000).toFixed(3) + " kB)<br />");
+    });
+    
+    jqGettextParser.info(_("Files selected."));
+});
+
+/**
  * Start parsing the files.
  */
-$("#parse").click(function() {
-    jqGettextParser.info("----------------------");
-    
+$("#parse").click(function() {    
     if(! $("#file")[0].files.length) {
         jqGettextParser.info(_("No file selected."));
         return;
     }
     
-    var template = $("#template")[0].files[0] || null;
     var fileList = $("#file")[0].files;
     var actualFile = 0;
     
-    var templateReader = new FileReader();
     var fileReader = new FileReader();
     
     fileReader.onload = function (e) {
@@ -95,33 +146,7 @@ $("#parse").click(function() {
             fileReader.readAsText(fileList[actualFile]);
         }
     };
-    
-    templateReader.onload = function (e) {
-        var t = {};
-        switch(template.name.substr(-4)) {
-            case "json":        
-                t = jQuery.parseJSON(e.target.result);
-                break;
-            case ".pot":
-                t = jqGettext.parsePOtoJSON(e.target.result);
-                break;
-            default:
-                jqGettextParser.info(_("Template file format not recognized!"));
-                jqGettextParser.info(_("Process canceled."));
-                return;
-        }
-        jQuery.each(t, function(key, value) {
-            jqGettextParser.template[key] = value;
-        });        
-        
-        fileReader.readAsText(fileList[actualFile]);
-    };
-    
-    if(template) {
-        templateReader.readAsText(template);
-    } else {
-        fileReader.readAsText(fileList[actualFile]);
-    }
+    fileReader.readAsText(fileList[actualFile]);
 });
 
 /**

@@ -59,8 +59,9 @@ var jqGettext = {
         
         $(document).find(":not(iframe)").addBack().contents().filter(function() {
             if(this.nodeType === 3 && jQuery.trim(this.nodeValue)) {
-                if (! jqGettext.translation[this.nodeValue]) return;
-                this.textContent = jqGettext.translation[this.nodeValue];
+                var key = jqGettext.escapeStringforPO(this.nodeValue);
+                if (! jqGettext.translation[key]) return;
+                this.textContent = jqGettext.translation[key];
             }
         });
     },
@@ -132,7 +133,9 @@ var jqGettext = {
                 "msgstr \"\"\n" +
                 "\"Content-Type: text/plain; charset=UTF-8\"\n\n";
         jQuery.each(json, function(key, value) {
-            po += "msgid \"" + key + "\"\nmsgstr \"" + value + "\"\n\n";
+            po += "msgid \"" + jqGettext.escapeStringforPO(key) + 
+                    "\"\nmsgstr \"" + jqGettext.escapeStringforPO(value) + 
+                    "\"\n\n";
         });
         return po;
     },
@@ -145,10 +148,23 @@ var jqGettext = {
      */
     parsePOtoJSON: function(po) {
         var json = {};
-        po.replace(/msgid "([^"]+)"[.\n]*?msgstr "([^"]*)"/g, function(m, key, value) {
+        po = po.replace(/#.*?\n/g, '').replace(/"\n"/g, '');
+        po.replace(/msgid "([^\n]+)"[.\n]*?msgstr "([^\n]*)"/g, function(m, key, value) {
             json[key] = value;
         });
+        console.log(json);
         return json;
+    },
+    
+    /**
+     * Escapes a JS string twice to put it correctly into a PO file.
+     * @param {String} str String to be escaped.
+     * @returns {String} The escaped string.
+     */
+    escapeStringforPO: function(str) {
+        return str.replace(/\n/g, '\\n').replace(/\r/g, '\\r')
+                .replace(/\t/g, '\\t').replace(/\"/g, '\\"')
+                .replace(/\\/g, '\\');
     }
 };
 
