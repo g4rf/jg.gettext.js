@@ -49,16 +49,21 @@ static HTML project, fill in the meta in the head of the HTML document:
 and the rest will be done automatically.
 
 But maybe we have a HTML5 app with dynamic changes? So there are some JS functions 
-in *jq.gettext.js* that may be useful.
+in *jq.gettext.js* that may be useful (especially changeLanguage()).
 
 # POT or JSON?
 
 The suppport for JSON is much more better (as it is JS built in), but it's harder to 
-maintain different languages, as there is no autmatic possibilty implemented to merge
+maintain different languages, as there is no automatic possibilty implemented to merge
 old language files with new JSON templates.
 With a POT file you can use [Poedit](https://poedit.net/) to do the translations and to 
 merge new POT files in old PO language files.
 
+# Drawbacks
+* the PO conversion is very weak (doesn't support plurals and so on)
+* to get rid of some problems with control characters, \n, \r, \t, \b, \f and \v are replaced with whitespaces
+* furthermore double quotes are replaced with single quotes and the back slash with a slash
+* multiple whitespaces are reduced to one whitespace as HTML ignores them
+
 # Bugs
-* the PO conversion is very weak (doesn't support multiple lines and so on)
 * the Firefox moans an XML error when loading the PO file (works anyway)
