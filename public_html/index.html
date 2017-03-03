@@ -106,8 +106,7 @@
 		// check if language is submitted
 		(function() {
 			var lang = /[\?&]lang=([^&#]*)/.exec(location.search);
-			console.log(lang);
-			if(lang) {
+			if(lang[1]) {
 				jqGettext.lang = lang[1];
 				jqGettext.changeLanguage();
 			}
