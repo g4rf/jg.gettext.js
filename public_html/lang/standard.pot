@@ -8,9 +8,6 @@ msgstr ""
 msgid "jqGettext Parser"
 msgstr ""
 
-msgid " html { box-sizing: border-box; } *, ::before, ::after { box-sizing: inherit; } #left, #right { position: fixed; overflow: auto; top: 0; bottom: 0; width: 48%; margin: 1%; padding: 1%; } #left { left: 0; overflow-x: hidden; } #right { right: 0; border: solid 1px #ccc; padding: 1%; } fieldset { margin: 1% 0; } .warn { color: #f33; } "
-msgstr ""
-
 msgid " Select language: "
 msgstr ""
 
@@ -93,5 +90,11 @@ msgid "download JSON template"
 msgstr ""
 
 msgid "download POT"
+msgstr ""
+
+msgid " html { box-sizing: border-box; } *, ::before, ::after { box-sizing: inherit; } #left, #right { position: fixed; overflow: auto; top: 0; bottom: 0; width: 48%; margin: 1%; padding: 1%; } #left { left: 0; overflow-x: hidden; } #right { right: 0; border: solid 1px #ccc; padding: 1%; } fieldset { margin: 1% 0; } .warn { color: #f33; } "
+msgstr ""
+
+msgid "Export the new template with 'write JSON' or 'write POT'."
 msgstr ""
 
