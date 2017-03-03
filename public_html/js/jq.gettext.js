@@ -7,8 +7,9 @@
  * javascript strings.
  * 
  * @license GNU GPL v3 https://www.gnu.org/licenses/gpl-3.0
- * @version 0.1alpha
+ * @version 0.2beta
  * @author Jan Kossick admin@g4rf.net
+ * @link https://github.com/g4rf/jq.gettext.js.git
  * @updated 2017-03-01
  * 
  * TODO:
@@ -59,7 +60,7 @@ var jqGettext = {
         
         $(document).find(":not(iframe)").addBack().contents().filter(function() {
             if(this.nodeType === 3 && jQuery.trim(this.nodeValue)) {
-                var key = jqGettext.escapeStringforPO(this.nodeValue);
+                var key = jqGettext.normalize(this.nodeValue);
                 if (! jqGettext.translation[key]) return;
                 this.textContent = jqGettext.translation[key];
             }
@@ -67,11 +68,11 @@ var jqGettext = {
     },
     
     /**
-     * Translates JS strings. Will be wrapped by _()-function.
+     * Translates strings. Will be wrapped by _()-function.
      * @param {String} string
      * @returns {String} The translated string.
      */
-    translateJS: function(string) {        
+    translate: function(string) {        
         return jqGettext.translation[string] || string;
     },
     
@@ -128,13 +129,15 @@ var jqGettext = {
     parseJSONtoPO: function(json) {
         var po = "# This file is badly generated with a simple JSON to PO function\n" +
                 "# used by jq.gettext.js.\n" +
-                "# https://github.com/g4rf/jg.gettext.js.git\n" +
+                "# https://github.com/g4rf/jq.gettext.js.git\n" +
                 "msgid \"\"\n" +
                 "msgstr \"\"\n" +
                 "\"Content-Type: text/plain; charset=UTF-8\"\n\n";
         jQuery.each(json, function(key, value) {
-            po += "msgid \"" + jqGettext.escapeStringforPO(key) + 
-                    "\"\nmsgstr \"" + jqGettext.escapeStringforPO(value) + 
+            po += "msgid \"" + jqGettext.normalize(key) + 
+                    // to normalize the value isn't maybe needed, but reduces
+                    // problems with control characters
+                    "\"\nmsgstr \"" + jqGettext.normalize(value) + 
                     "\"\n\n";
         });
         return po;
@@ -148,23 +151,31 @@ var jqGettext = {
      */
     parsePOtoJSON: function(po) {
         var json = {};
-        po = po.replace(/#.*?\n/g, '').replace(/"\n"/g, '');
-        po.replace(/msgid "([^\n]+)"[.\n]*?msgstr "([^\n]*)"/g, function(m, key, value) {
-            json[key] = value;
-        });
-        console.log(json);
+        po = po.replace(/#.*?\n/g, '') // elimnates comments
+                .replace(/"\n"/g, '') // makes multiple lines one line
+                // extracts keys and values
+                .replace(/msgid "([^\n]+)"[.\n]*?msgstr "([^\n]*)"/g, 
+                    function(m, key, value) {
+                        json[key] = jqGettext.normalize(value);
+                    }
+                );
         return json;
     },
     
     /**
-     * Escapes a JS string twice to put it correctly into a PO file.
-     * @param {String} str String to be escaped.
-     * @returns {String} The escaped string.
+     * Replaces new lines, tabs and other HTML irrelevant characters with 
+     * spaces, shorten multiple spaces to one space, replaces double quotes
+     * with single quotes and the back slash with slash.
+     * @param {String} str The string to normalize.
+     * @returns {String} The normalized string.
      */
-    escapeStringforPO: function(str) {
-        return str.replace(/\n/g, '\\n').replace(/\r/g, '\\r')
-                .replace(/\t/g, '\\t').replace(/\"/g, '\\"')
-                .replace(/\\/g, '\\');
+    normalize: function(str) {
+        return str.replace(/\n|\t|\r/g, ' ')    // real line breaks and tabs
+                .replace(/\\n|\\t|\\r/g, ' ')   // literal line breaks and tabs
+                .replace(/\s+/g, ' ')           // multiple spaces
+                .replace(/\\"/g, '\'')          // literal double quotes
+                .replace(/"/g, '\'')            // real double quotes
+                .replace(/\\/g, '/');           // backslash
     }
 };
 
@@ -172,7 +183,7 @@ var jqGettext = {
  * Standard gettext function. Wrapper for jqGettext.translateJS.
  * @type Function
  */
-var _ = jqGettext.translateJS;
+var _ = jqGettext.translate;
 
 /**
  * Initializing...

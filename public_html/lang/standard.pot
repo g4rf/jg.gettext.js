@@ -1,6 +1,6 @@
 # This file is badly generated with a simple JSON to PO function
 # used by jq.gettext.js.
-# https://github.com/g4rf/jg.gettext.js.git
+# https://github.com/g4rf/jq.gettext.js.git
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8"
@@ -8,10 +8,19 @@ msgstr ""
 msgid "jqGettext Parser"
 msgstr ""
 
-msgid "\n\t\thtml { box-sizing: border-box; } \n\t\t*, ::before, ::after { box-sizing: inherit; }\n\t\t\n\t\t#left, #right {\n\t\t\tposition: fixed;\n\t\t\toverflow: auto;\n\t\t\ttop: 0;\n\t\t\tbottom: 0;\n\t\t\twidth: 48%;\n\t\t\tmargin: 1%;\n\t\t\tpadding: 1%;\n\t\t}\n\t\t#left {\n\t\t\tleft: 0;\n\t\t\toverflow-x: hidden;\n\t\t}\n\t\t#right {\n\t\t\tright: 0;\n\t\t\tborder: solid 1px #ccc;\n\t\t\tpadding: 1%;\n\t\t}\n\t\tfieldset {\n\t\t\tmargin: 1% 0;\n\t\t}\n\t"
+msgid " html { box-sizing: border-box; } *, ::before, ::after { box-sizing: inherit; } #left, #right { position: fixed; overflow: auto; top: 0; bottom: 0; width: 48%; margin: 1%; padding: 1%; } #left { left: 0; overflow-x: hidden; } #right { right: 0; border: solid 1px #ccc; padding: 1%; } fieldset { margin: 1% 0; } .warn { color: #f33; } "
 msgstr ""
 
-msgid "\n\t\t | \n\t\t"
+msgid " Select language: "
+msgstr ""
+
+msgid "Deutsch"
+msgstr ""
+
+msgid "English"
+msgstr ""
+
+msgid " | "
 msgstr ""
 
 msgid "parse"
@@ -38,19 +47,19 @@ msgstr ""
 msgid "Select files for parsing."
 msgstr ""
 
-msgid "Click \"parse\"."
+msgid "Click 'parse'."
 msgstr ""
 
 msgid "Repeat last two step with all files from your project."
 msgstr ""
 
-msgid "Export the new template with \"output JSON\" or \"output POT\"."
+msgid "Export the new template with 'output JSON' or 'output POT'."
 msgstr ""
 
 msgid "Download or save the file with your browser."
 msgstr ""
 
-msgid "Now you're ready to edit the template (e.g. with \n\t"
+msgid "Now you're ready to edit the template (e.g. with "
 msgstr ""
 
 msgid ") and use it in your project."
@@ -65,10 +74,7 @@ msgstr ""
 msgid "Can't read template file."
 msgstr ""
 
-msgid "Template file \nformat not recognized!"
-msgstr ""
-
-msgid "Process canceled."
+msgid "Template file format not recognized!"
 msgstr ""
 
 msgid "Template loaded."
@@ -80,12 +86,12 @@ msgstr ""
 msgid "No file selected."
 msgstr ""
 
-msgid "parsing file "
+msgid "parsing file"
 msgstr ""
 
 msgid "download JSON template"
 msgstr ""
 
-msgid "download POT template"
+msgid "download POT"
 msgstr ""
 

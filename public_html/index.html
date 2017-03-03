@@ -5,9 +5,10 @@
  * This file is the gui for jqgettext-parser.js.
  * 
  * @license GNU GPL v3 https://www.gnu.org/licenses/gpl-3.0
- * @version 0.1alpha
+ * @version 0.2beta
  * @author Jan Kossick admin@g4rf.net
- * @updated 2017-03-01
+ * @link https://github.com/g4rf/jq.gettext.js.git
+ * @updated 2017-03-03
  */ -->
 <!DOCTYPE html>
 <html><head>
@@ -15,6 +16,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	
+	<meta name="gettext-lang" content="en_US" />
 	<meta name="gettext-type" content="po" />
 	
 	<style>
@@ -42,8 +44,16 @@
 		fieldset {
 			margin: 1% 0;
 		}
+		.warn {
+			color: #f33;
+		}
 	</style>
 </head><body><div id="left">
+	<p>
+		Select language: 
+		<a href="?lang=de_DE">Deutsch</a>
+		<a href="?lang=en_US">English</a>
+	</p>
 	<h1>jqGettext Parser</h1>
 	
 	<div class="buttonpane">
@@ -67,7 +77,7 @@
 	</fieldset>
 	
 	<ol>
-		<li>Select a template file, if you have any.</li>
+		<li>Select            a template file, if you have any.</li>
 		<li>Select files for parsing.</li>
 		<li>Click "parse".</li>
 		<li>Repeat last two step with all files from your project.</li>
@@ -92,5 +102,15 @@
 	<script src="js/jquery-3.1.1.min.js"></script>
 	<script src="js/jq.gettext.js"></script>
 	<script src="js/jq.gettext-parser.js"></script>
-
+	<script>
+		// check if language is submitted
+		(function() {
+			var lang = /[\?&]lang=([^&#]*)/.exec(location.search);
+			console.log(lang);
+			if(lang) {
+				jqGettext.lang = lang[1];
+				jqGettext.changeLanguage();
+			}
+		})();
+	</script>
 </body></html>

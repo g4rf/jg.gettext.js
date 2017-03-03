@@ -10,9 +10,10 @@
  * jqGettext to translate the HTML page on the fly.
  * 
  * @license GNU GPL v3 https://www.gnu.org/licenses/gpl-3.0
- * @version 0.1alpha
+ * @version 0.2beta
  * @author Jan Kossick admin@g4rf.net
- * @updated 2017-03-01
+ * @link https://github.com/g4rf/jq.gettext.js.git
+ * @updated 2017-03-03
  * 
  * TODO:
  *  - improve POT support
@@ -34,7 +35,15 @@ var jqGettextParser = {
      * @param {String} msg The message.
      */
     info: function(msg) {
-        $("#info").prepend(msg + "<br />");
+        $("#info").prepend("<br />").prepend(msg);
+    },
+    
+    /**
+     * Prints a warning message.
+     * @param {String} msg The message.
+     */
+    warn: function(msg) {
+        jqGettextParser.info($("<span />").addClass("warn").append(msg));
     },
     
     /**
@@ -47,8 +56,9 @@ var jqGettextParser = {
             return this.nodeType === 3 && jQuery.trim(this.nodeValue);
         });
         jQuery.each(nodes, function(index, node) {
-            if(typeof jqGettextParser.template[node.nodeValue] === "undefined")
-                jqGettextParser.template[node.nodeValue] = "";
+            var key = jqGettext.normalize(node.nodeValue);
+            if(typeof jqGettextParser.template[key] === "undefined")
+                jqGettextParser.template[key] = "";
         });
         jqGettextParser.printTemplate();
     },
@@ -61,8 +71,9 @@ var jqGettextParser = {
      */
     parseJS: function(data) {
         data.replace(/_\(["|'](.+?)["|']\)/g, function(m, string) {
-            if(typeof jqGettextParser.template[string] === "undefined")
-                jqGettextParser.template[string] = "";
+            var key = jqGettext.normalize(string);
+            if(typeof jqGettextParser.template[key] === "undefined")
+                jqGettextParser.template[key] = "";
         });
         jqGettextParser.printTemplate();
     },
@@ -79,7 +90,7 @@ var jqGettextParser = {
 $("#template").change(function() {    
     var template = $("#template")[0].files[0] || null;
     if(! template) {
-        jqGettextParser.info(_("Can't read template file."));
+        jqGettextParser.warn(_("Can't read template file."));
     }
     
     var reader = new FileReader();    
@@ -93,8 +104,7 @@ $("#template").change(function() {
                 t = jqGettext.parsePOtoJSON(e.target.result);
                 break;
             default:
-                jqGettextParser.info(_("Template file \nformat not recognized!"));
-                jqGettextParser.info(_("Process canceled."));
+                jqGettextParser.warn(_("Template file \nformat not recognized!"));
                 return;
         }
         jQuery.each(t, function(key, value) {
@@ -118,7 +128,7 @@ $("#file").change(function() {
                 (file.size / 1000).toFixed(3) + " kB)<br />");
     });
     
-    jqGettextParser.info(_("Files selected."));
+    jqGettextParser.info(_("Files         selected."));
 });
 
 /**
@@ -126,7 +136,7 @@ $("#file").change(function() {
  */
 $("#parse").click(function() {    
     if(! $("#file")[0].files.length) {
-        jqGettextParser.info(_("No file selected."));
+        jqGettextParser.warn(_("No file selected."));
         return;
     }
     
@@ -136,8 +146,8 @@ $("#parse").click(function() {
     var fileReader = new FileReader();
     
     fileReader.onload = function (e) {
-        jqGettextParser.info(_("parsing file ") + fileList[actualFile].name + " (" + 
-                (actualFile + 1) + "/" + fileList.length + ")");
+        jqGettextParser.info(_("parsing file") + " " + fileList[actualFile].name
+                + " (" + (actualFile + 1) + "/" + fileList.length + ")");
 
         jqGettextParser.parseHTML(jQuery.parseHTML(e.target.result));
         jqGettextParser.parseJS(e.target.result);
@@ -164,7 +174,7 @@ $("#write-json").click(function() {
 $("#write-pot").click(function() {    
     var uriContent = "data:application/pot," + encodeURIComponent(
         jqGettext.parseJSONtoPO(jqGettextParser.template));
-    window.open(uriContent, _('download POT template'));
+    window.open(uriContent, _('download POT'));
 });
 
 /**
