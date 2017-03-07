@@ -165,7 +165,7 @@ var jqGettext = {
     /**
      * Replaces new lines, tabs and other HTML irrelevant characters with 
      * spaces, shorten multiple spaces to one space, replaces double quotes
-     * with single quotes and the back slash with slash.
+     * with “ (&#147;) and the back slash with ∖ (&#8726;).
      * @param {String} str The string to normalize.
      * @returns {String} The normalized string.
      */
@@ -173,9 +173,9 @@ var jqGettext = {
         return str.replace(/\n|\t|\r/g, ' ')    // real line breaks and tabs
                 .replace(/\\n|\\t|\\r/g, ' ')   // literal line breaks and tabs
                 .replace(/\s+/g, ' ')           // multiple spaces
-                .replace(/\\"/g, '\'')          // literal double quotes
-                .replace(/"/g, '\'')            // real double quotes
-                .replace(/\\/g, '/');           // backslash
+                .replace(/\\"/g, '“')           // literal double quotes
+                .replace(/"/g, '“')           // real double quotes
+                .replace(/\\/g, '∖');           // backslash
     }
 };
 
