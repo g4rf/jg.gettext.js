@@ -4,8 +4,8 @@ A simple HTML and JS translation for static websites using jQuery.
 The general idea is, to use jQuery to read the text nodes from an HTML document
 and put them into a JSON or POT file. Then translate it (with an editor or 
 [Poedit](https://poedit.net/)) and put them in a gettext-style folder structure.
-Now reference it in the HTML document and load the jq.gettext.js. Now every text
-node is translated. In addition the script has an _()-function for gettext feeling
+Now reference it in the HTML document and load the jq.gettext.js. Then every text
+node is translated. In addition the script has an *_()-function* for gettext feeling
 in javascript.
 
 Feel free to contact me at admin@g4rf.net.
@@ -52,7 +52,7 @@ static HTML project, fill in the meta in the head of the HTML document:
 and the rest will be done automatically.
 
 But maybe we have a HTML5 app with dynamic changes? So there are some JS functions 
-in *jq.gettext.js* that may be useful (especially changeLanguage()).
+in *jq.gettext.js* that may be useful (especially *changeLanguage()*).
 
 Basically the **jq.gettext.js** should work even with older browsers, as it uses jQuery 
 for the whole DOM magic. Maybe some string and regex functions are not fully supported 
@@ -68,10 +68,10 @@ update old PO language files with the new POT file.
 
 # Drawbacks
 * the PO conversion is very weak (doesn't support plurals and so on)
-* to get rid of some problems with control characters \n, \r and \t are replaced with whitespaces
-* furthermore double quotes are replaced with single quotes and the back slash with a slash
+* to get rid of some problems with control characters, \n, \r and \t are replaced with whitespaces
+* furthermore double quotes are replaced with “ (&#147;) and the back slash with ∖ (&#8726;)
 * multiple whitespaces are reduced to one whitespace as HTML ignores them anyway
-* the parser for JS files can't recognize multiline calls to the _()-function.
+* the parser for JS files can't recognize multiline calls to the *_()-function*.
 
 # Bugs
 * the Firefox moans an XML error when loading the PO file (works anyway)
