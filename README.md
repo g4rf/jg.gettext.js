@@ -69,7 +69,7 @@ update old PO language files with the new POT file.
 # Drawbacks
 * the PO conversion is very weak (doesn't support plurals and so on)
 * to get rid of some problems with control characters, \n, \r and \t are replaced with whitespaces
-* furthermore double quotes are replaced with “ (&#147;) and the back slash with ∖ (&#8726;)
+* furthermore double quotes are replaced with “ (&amp;#147;) and the back slash with ∖ (&amp;#8726;)
 * multiple whitespaces are reduced to one whitespace as HTML ignores them anyway
 * the parser for JS files can't recognize multiline calls to the *_()-function*.
 
